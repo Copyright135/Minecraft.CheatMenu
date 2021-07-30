@@ -1,0 +1,8 @@
+name: CheatMenu
+version: 1.0
+main: io.github.copyright135.cheatmenu.CheatMenu
+description: Menu with a bunch of cheats
+
+commands:
+  cheatmenu:
+    aliases: [cm, cheat, cheats]
