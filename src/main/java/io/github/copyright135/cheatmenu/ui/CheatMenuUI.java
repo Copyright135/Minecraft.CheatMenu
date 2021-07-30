@@ -13,7 +13,7 @@ public class CheatMenuUI {
 
     private static Inventory inv;
     private static String invName;
-    private static int invSize = 6 * 9;
+    private static final int invSize = 6 * 9;
 
     public static void init() {
         invName = Utils.chat("&cCheat Menu");
@@ -25,19 +25,23 @@ public class CheatMenuUI {
     private static void loadPossibleItems() {
         ItemStack potion = Utils.createItem(Material.POTION, 1, Utils.chat("&cHeal"), null);
         ItemMeta meta = potion.getItemMeta();
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        assert meta != null;
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         potion.setItemMeta(meta);
 
         inv.addItem(potion);
         inv.addItem(Utils.createItem(Material.PORKCHOP, 1, Utils.chat("&6Feed"), null));
         inv.addItem(Utils.createItem(Material.FEATHER, 1, Utils.chat("&bFly"), null));
-        inv.addItem(Utils.createItem(Material.EXPERIENCE_BOTTLE, 1, Utils.chat("&aLevel Up"), null));
+        inv.addItem(Utils.createItem(Material.WATER_BUCKET, 1, Utils.chat("&3Toggle Downfall")));
         inv.addItem(Utils.createItem(Material.NETHER_STAR, 1, Utils.chat("&eCreative"), null));
+        inv.addItem(Utils.createItem(Material.EXPERIENCE_BOTTLE, 1, Utils.chat("&a+1 Level"), null));
+        inv.addItem(Utils.createItem(Material.EXPERIENCE_BOTTLE, 5, Utils.chat("&a+5 Levels"), null));
+        inv.addItem(Utils.createItem(Material.EXPERIENCE_BOTTLE, 10, Utils.chat("&a+10 Levels"), null));
+        inv.addItem(Utils.createItem(Material.ANVIL, 1, Utils.chat("&7Repair"), null));
     }
 
     public static Inventory getInventory(Player p) {
-        Inventory newInv = getAllowedCheats(p);
-        return newInv;
+        return getAllowedCheats(p);
     }
 
     public static Inventory getAllowedCheats(Player p) {
@@ -51,7 +55,6 @@ public class CheatMenuUI {
             }
         }
 
-        Bukkit.broadcastMessage(String.valueOf(9 * (int) Math.ceil((double) tempInventory.firstEmpty() / 9)));
         Inventory newInv = Bukkit.createInventory(null, 9 * (int) Math.ceil((double) tempInventory.firstEmpty() / 9), invName);
 
         for (ItemStack item : tempInventory) {
@@ -74,8 +77,7 @@ public class CheatMenuUI {
 
     //
     private static String getPermFromItem(ItemStack item) {
-        String perm = "cheatmenu." + getItemDescription(item);
-        return perm;
+        return "cheatmenu." + getItemDescription(item);
     }
 
     // Extract command from item name

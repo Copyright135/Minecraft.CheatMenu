@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class CheatMenuCommand implements CommandExecutor {
 
-    private CheatMenu plugin;
+    private final CheatMenu plugin;
 
     public CheatMenuCommand(CheatMenu plugin) {
         this.plugin = plugin;

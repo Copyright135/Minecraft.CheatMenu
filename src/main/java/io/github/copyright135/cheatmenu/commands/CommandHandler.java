@@ -4,7 +4,7 @@ import io.github.copyright135.cheatmenu.CheatMenu;
 
 public class CommandHandler {
 
-    private CheatMenu plugin;
+    private final CheatMenu plugin;
 
     public CommandHandler(CheatMenu plugin) {
         this.plugin = plugin;

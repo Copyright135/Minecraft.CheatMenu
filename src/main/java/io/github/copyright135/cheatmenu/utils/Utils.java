@@ -1,15 +1,16 @@
 package io.github.copyright135.cheatmenu.utils;
 
-import io.github.copyright135.cheatmenu.CheatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Utils {
 
@@ -33,10 +34,7 @@ public class Utils {
 
         // Create lore if applicable
         if (itemLore != null && itemLore.length >= 1) {
-            ArrayList<String> lore = new ArrayList<>();
-            for (String str : itemLore) {
-                lore.add(str);
-            }
+            ArrayList<String> lore = new ArrayList<>(Arrays.asList(itemLore));
 
             meta.setLore(lore);
         }
@@ -51,7 +49,7 @@ public class Utils {
      * Utility Commands
      */
 
-    private static String INSUFFICIENT_PERMISSION = "&cYou do not have permission to use this command.";
+    private static final String INSUFFICIENT_PERMISSION = "&cYou do not have permission to use this command.";
 
     public static void handleCommand(Player sender, Player receiver, String command) {
         if (checkPerm(sender, receiver, command)) {
@@ -65,11 +63,23 @@ public class Utils {
                 case "fly":
                     toggleFly(receiver);
                     break;
-                case "level up":
-                    levelUp(receiver);
+                case "toggle downfall":
+                    toggleDownfall(receiver);
                     break;
                 case "creative":
                     toggleCreative(receiver);
+                    break;
+                case "+1 level":
+                    levelUp(receiver, 1);
+                    break;
+                case "+5 levels":
+                    levelUp(receiver, 5);
+                    break;
+                case "+10 levels":
+                    levelUp(receiver, 10);
+                    break;
+                case "repair":
+                    repair(receiver);
                     break;
             }
         }
@@ -96,9 +106,8 @@ public class Utils {
         p.sendMessage(Utils.chat("&bFlight has been toggled!"));
     }
 
-    private static void levelUp(Player p) {
-        p.giveExpLevels(1);
-        p.sendMessage(Utils.chat("&aYou have been been granted one level!"));
+    private static void toggleDownfall(Player p) {
+        p.getWorld().setStorm(!p.getWorld().hasStorm());
     }
 
     private static void toggleCreative(Player p) {
@@ -110,6 +119,22 @@ public class Utils {
         p.sendMessage(Utils.chat("&eCreative mode toggled!"));
     }
 
+    private static void levelUp(Player p, int levels) {
+        p.giveExpLevels(levels);
+
+        p.sendMessage(Utils.chat("&aYou have been granted " + levels + (levels > 1 ? " levels!" : " level.")));
+    }
+
+    private static void repair(Player p) {
+        for (ItemStack item : p.getInventory()) {
+            if (item != null) {
+                Damageable meta = (Damageable) item.getItemMeta();
+                meta.setDamage(0);
+                item.setItemMeta((ItemMeta) meta);
+            }
+        }
+    }
+
 
     // Check various perm possibilities
     private static boolean checkPerm(Player sender, Player receiver, String permRoot) {
@@ -117,9 +142,11 @@ public class Utils {
         if (!sender.isOp()) {
             if (!sender.equals(receiver) && !sender.hasPermission(permRoot + ".other")) {
                 // Check player has perm to use command on other
+                sender.sendMessage(Utils.chat(INSUFFICIENT_PERMISSION));
                 return false;
             } else if (sender.equals(receiver) && !sender.hasPermission(permRoot + ".self")) {
                 // Check player has per mto use command on self
+                sender.sendMessage(Utils.chat(INSUFFICIENT_PERMISSION));
                 return false;
             }
         }

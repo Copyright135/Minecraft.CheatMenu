@@ -1,7 +1,8 @@
 name: CheatMenu
-version: 1.0
+version: ${project.version}
 main: io.github.copyright135.cheatmenu.CheatMenu
 description: Menu with a bunch of cheats
+api-version: 1.13
 
 commands:
   cheatmenu:

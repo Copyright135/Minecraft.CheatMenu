@@ -6,10 +6,7 @@ import org.bukkit.plugin.PluginManager;
 
 public class ListenerHandler {
 
-    private CheatMenu plugin;
-
     public ListenerHandler(CheatMenu plugin) {
-        this.plugin = plugin;
         PluginManager plm = Bukkit.getPluginManager();
 
         plm.registerEvents(new InventoryClickListener(), plugin);
