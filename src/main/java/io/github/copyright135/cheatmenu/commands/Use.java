@@ -1,40 +1,41 @@
 package io.github.copyright135.cheatmenu.commands;
 
-import io.github.copyright135.cheatmenu.CheatMenu;
 import io.github.copyright135.cheatmenu.ui.CheatMenuUI;
 import io.github.copyright135.cheatmenu.utils.Utils;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class CheatMenuCommand implements CommandExecutor {
+public class Use implements SubCommand {
 
-    private final CheatMenu plugin;
+    private FileConfiguration config;
 
-    public CheatMenuCommand(CheatMenu plugin) {
-        this.plugin = plugin;
+    public Use(FileConfiguration config) {
+        this.config = config;
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        FileConfiguration config = plugin.getConfig();
+    public boolean onCommand(CommandSender commandSender, String[] args) {
 
         if (!(commandSender instanceof Player)) {
             commandSender.sendMessage(Utils.chat(config.getString("sender_not_player")));
-            return true;
+            return false;
         }
 
         Player p = (Player) commandSender;
 
-        if (!p.hasPermission("cheatmenu.use") && !p.isOp()) {
+        if (!p.hasPermission(getPermission()) && !p.isOp()) {
             p.sendMessage(Utils.chat(config.getString("insufficient_permission")));
-            return true;
+            return false;
         }
 
         p.openInventory(CheatMenuUI.getInventory(p));
 
         return true;
+    }
+
+    @Override
+    public String getPermission() {
+        return "cheatmenu.use";
     }
 }
