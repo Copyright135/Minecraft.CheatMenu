@@ -3,7 +3,7 @@ sender_not_player: '&cOnly players can use this command.'
 invalid_command: '&cThis command does not exist.'
 insufficient_permission: '&cYou do not have permission to use this command.'
 
-#Cheat Items 
+#Cheat Items
 Cheat Items:
   - Heal:
       item: 'potion'
