@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryClickListener implements Listener {
 
+    // Listen for clicks inside of the Cheat Menu
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         if (e.getView().getTitle().equals(CheatMenuUI.getInventoryName())) {
@@ -18,6 +19,7 @@ public class InventoryClickListener implements Listener {
                 return;
             }
 
+            // Verify that the clicker clicked inside of the cheat menu and not their own inventory
             ItemStack item = e.getCurrentItem();
             if (e.getWhoClicked() instanceof Player) {
                 Player p = (Player) e.getWhoClicked();
@@ -25,6 +27,8 @@ public class InventoryClickListener implements Listener {
                 if (p.getInventory().contains(item)) {
                     return;
                 }
+
+                // Do whatever CheatMenuUI wants from a click
                 CheatMenuUI.click(p, item);
             }
         }

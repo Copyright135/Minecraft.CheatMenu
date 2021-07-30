@@ -1,3 +1,76 @@
 #General
 sender_not_player: '&cOnly players can use this command.'
+invalid_command: '&cThis command does not exist.'
 insufficient_permission: '&cYou do not have permission to use this command.'
+
+#Cheat Items
+Cheat Items:
+  - Heal:
+      item: 'potion'
+      amount: 1
+      item_name: '&cHeal' #uses &format codes https://minecraft.fandom.com/wiki/Formatting_codes
+      item_lore:
+        # - '&aexample lore line 1'
+        # - '&7example lore line 2'
+        # - etc
+      flags:
+        - 'HIDE_POTION_EFFECTS'
+        # available flags located at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html
+      command: 'heal'
+      perm: 'customessentials.heal'
+
+  - Feed:
+      item: 'porkchop'
+      amount: 1
+      item_name: '&6Feed'
+      command: 'feed'
+      perm: 'customessentials.feed'
+
+  - Fly:
+      item: 'feather'
+      amount: 1
+      item_name: '&bFly'
+      command: 'fly'
+      perm: 'customessentials.fly'
+
+  - Toggle Downfall:
+      item: 'water bucket'
+      amount: 1
+      item_name: '&3Toggle Downfall'
+      command: 'toggledownfall'
+      perm: 'customessentials.toggledownfall'
+
+  - Creative:
+      item: 'nether_star'
+      amount: 1
+      item_name: '&eToggle Creative'
+      command: 'togglecreative'
+      perm: 'customessentials.creative'
+
+  - +1 Level:
+      item: 'experience bottle'
+      amount: 1
+      item_name: '&a+1 Level'
+      command: 'level 1'
+      perm: 'customessentials.level'
+
+  - +5 Levels:
+      item: 'experience_bottle'
+      amount: 5
+      item_name: '&a+5 levels'
+      command: 'level 5'
+      perm: 'customessentials.level'
+
+  - +10 Levels:
+      item: 'experience_bottle'
+      amount: 10
+      item_name: '&a+10 levels'
+      command: 'level 10'
+      perm: 'customessentials.level'
+
+  - Repair:
+      item: 'anvil'
+      amount: 1
+      item_name: '&7Repair'
+      command: 'repair'
+      perm: 'customessentials.repair'
